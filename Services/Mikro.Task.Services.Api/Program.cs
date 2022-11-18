@@ -16,8 +16,8 @@ builder.Services.AddDbContext<MovieDbContext>(options =>
     });
 });
 
-builder.Services.AddScoped<IHostedService, TheMovieDbService>();
-builder.Services.AddScoped<ITheMovieService,TheMovieService>();
+builder.Services.AddSingleton<IHostedService, TheMovieDbService>();
+//builder.Services.AddScoped<ITheMovieService,TheMovieService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
