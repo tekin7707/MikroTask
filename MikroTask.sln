@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		db.txt = db.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B7E4AB62-19C1-484B-85C5-698269EADE6B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mikro.Task.Test", "Test\Mikro.Task.Test\Mikro.Task.Test.csproj", "{E0C33039-6B1E-4CB7-B95A-F66989CA85FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,10 @@ Global
 		{FD6994E1-125F-4E10-B3AB-1BA81A037405}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD6994E1-125F-4E10-B3AB-1BA81A037405}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD6994E1-125F-4E10-B3AB-1BA81A037405}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0C33039-6B1E-4CB7-B95A-F66989CA85FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0C33039-6B1E-4CB7-B95A-F66989CA85FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0C33039-6B1E-4CB7-B95A-F66989CA85FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0C33039-6B1E-4CB7-B95A-F66989CA85FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +57,7 @@ Global
 		{83AA90AC-538D-4231-921D-98530E4D310C} = {2433F085-B884-4543-BD67-2801035D9151}
 		{3905CA07-73A1-4E84-BF59-2C2B18100556} = {2433F085-B884-4543-BD67-2801035D9151}
 		{FD6994E1-125F-4E10-B3AB-1BA81A037405} = {2433F085-B884-4543-BD67-2801035D9151}
+		{E0C33039-6B1E-4CB7-B95A-F66989CA85FF} = {B7E4AB62-19C1-484B-85C5-698269EADE6B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {39E8B462-3817-4D47-BB67-959A0A5EE4B9}
