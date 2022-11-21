@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mikro.Task.Services.Application.Services
+namespace Mikro.Task.Services.Application.Services.Interfaces
 {
     public interface ITheMovieService
     {

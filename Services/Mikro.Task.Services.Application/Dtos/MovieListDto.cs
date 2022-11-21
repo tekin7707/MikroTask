@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Mikro.Task.Services.Application.Dtos
 {
-    public class Result
+    public class MovieListDto
     {
         public bool adult { get; set; }
         public string backdrop_path { get; set; }
@@ -24,5 +23,8 @@ namespace Mikro.Task.Services.Application.Dtos
         public bool video { get; set; }
         public double vote_average { get; set; }
         public int vote_count { get; set; }
+        public int? vote_user { get; set; }
+
+
     }
 }

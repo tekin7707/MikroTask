@@ -1,0 +1,13 @@
+Migrations
+-------------
+Add-Migration init -Context MovieDbContext
+Update-Database -Context MovieDbContext
+
+Add-Migration init -Context IdDbContext
+Update-Database -Context IdDbContext
+
+
+
+Docker
+-------------
+

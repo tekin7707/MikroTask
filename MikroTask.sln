@@ -7,13 +7,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{24
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mikro.Task.Services.Api", "Services\Mikro.Task.Services.Api\Mikro.Task.Services.Api.csproj", "{641EFDB7-331F-4385-B9EE-8785E9B67663}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{2D370AD8-99C6-4B69-9261-4D5613FC26A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mikro.Task.Services.Domain", "Services\Mikro.Task.Services.Domain\Mikro.Task.Services.Domain.csproj", "{83AA90AC-538D-4231-921D-98530E4D310C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mikro.Task.Services.Domain", "Services\Mikro.Task.Services.Domain\Mikro.Task.Services.Domain.csproj", "{83AA90AC-538D-4231-921D-98530E4D310C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mikro.Task.Services.Db", "Services\Mikro.Task.Services.Db\Mikro.Task.Services.Db.csproj", "{3905CA07-73A1-4E84-BF59-2C2B18100556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mikro.Task.Services.Db", "Services\Mikro.Task.Services.Db\Mikro.Task.Services.Db.csproj", "{3905CA07-73A1-4E84-BF59-2C2B18100556}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mikro.Task.Services.Application", "Services\Mikro.Task.Services.Application\Mikro.Task.Services.Application.csproj", "{FD6994E1-125F-4E10-B3AB-1BA81A037405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mikro.Task.Services.Application", "Services\Mikro.Task.Services.Application\Mikro.Task.Services.Application.csproj", "{FD6994E1-125F-4E10-B3AB-1BA81A037405}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{746B6028-737C-4364-BDBD-4118BEB1B14B}"
+	ProjectSection(SolutionItems) = preProject
+		db.txt = db.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

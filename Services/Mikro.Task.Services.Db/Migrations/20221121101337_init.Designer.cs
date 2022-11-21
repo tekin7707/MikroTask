@@ -11,7 +11,7 @@ using Mikro.Task.Services.Db;
 namespace Mikro.Task.Services.Db.Migrations
 {
     [DbContext(typeof(MovieDbContext))]
-    [Migration("20221117205136_init")]
+    [Migration("20221121101337_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,6 +22,27 @@ namespace Mikro.Task.Services.Db.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Mikro.Task.Services.Application.Dtos.MovieCommentModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("ntext");
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Comments", "mov");
+                });
 
             modelBuilder.Entity("Mikro.Task.Services.Domain.MovieModel", b =>
                 {
@@ -77,9 +98,28 @@ namespace Mikro.Task.Services.Db.Migrations
                     b.Property<int>("vote_count")
                         .HasColumnType("int");
 
+                    b.Property<int>("vote_user")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
 
-                    b.ToTable("Movies", "book");
+                    b.ToTable("Movies", "mov");
+                });
+
+            modelBuilder.Entity("Mikro.Task.Services.Application.Dtos.MovieCommentModel", b =>
+                {
+                    b.HasOne("Mikro.Task.Services.Domain.MovieModel", "Movie")
+                        .WithMany("Movie")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("Mikro.Task.Services.Domain.MovieModel", b =>
+                {
+                    b.Navigation("Movie");
                 });
 #pragma warning restore 612, 618
         }
