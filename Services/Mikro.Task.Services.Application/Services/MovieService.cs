@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Mikro.Task.Services.Application.Dtos;
 using Mikro.Task.Services.Application.Helpers;
@@ -21,12 +22,14 @@ namespace Mikro.Task.Services.Application.Services
         private readonly MovieDbContext _movieDbContext;
         private readonly IMapper _mapper;
         private readonly RedisService _redisService;
+        private readonly ISendEndpointProvider _sendEndpointProvider;
 
-        public MovieService(MovieDbContext movieDbContext, IMapper mapper, RedisService redisService)
+        public MovieService(MovieDbContext movieDbContext, IMapper mapper, RedisService redisService, ISendEndpointProvider sendEndpointProvider)
         {
             _movieDbContext = movieDbContext;
             _mapper = mapper;
             _redisService = redisService;
+            _sendEndpointProvider = sendEndpointProvider;
         }
 
         public async Task<List<MovieListDto>> GetAllAsync()
@@ -91,9 +94,17 @@ namespace Mikro.Task.Services.Application.Services
             return result;
         }
 
-        public Task<NoContent> RecommendMovieAsync(RecommendMovieDto recommendMovieDto)
+        public async Task<bool> RecommendMovieAsync(RecommendMovieDto recommendMovieDto)
         {
-            throw new NotImplementedException();
+            var movie = await GetAsync(recommendMovieDto.MovieId);
+
+            var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:sendemailqueue"));
+
+            RecommendMovieEmailDto model = new RecommendMovieEmailDto { Email=recommendMovieDto.Email, Movie = movie};
+
+            await sendEndpoint.Send<RecommendMovieEmailDto>(model);
+
+            return true;
         }
 
     }

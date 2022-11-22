@@ -37,8 +37,8 @@ namespace Mikro.Task.Services.Api.Controllers
         [Route("/Recommend")]
         public async Task<IActionResult> RecommendAsync(RecommendMovieDto recommendMovieDto)
         {
-            await _movieService.RecommendMovieAsync(recommendMovieDto);
-            return Ok();
+            var result = await _movieService.RecommendMovieAsync(recommendMovieDto);
+            return Ok(result ? "The movie recommended.":"Unexpected error");
         }
 
         [HttpPost]

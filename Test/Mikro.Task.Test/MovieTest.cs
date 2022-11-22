@@ -23,7 +23,7 @@ namespace MikroTask.Test
             var mapper = mockMapper.CreateMapper();
 
             _contextMock = MockDBContext.Get();
-            _movieService = new MovieService(_contextMock, mapper,null);
+            _movieService = new MovieService(_contextMock, mapper,null, null);
         }
 
         [Fact]

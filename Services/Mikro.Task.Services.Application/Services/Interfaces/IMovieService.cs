@@ -13,7 +13,6 @@ namespace Mikro.Task.Services.Application.Services.Interfaces
         Task<List<MovieListDto>> GetAllAsync();
         Task<MovieDto> GetAsync(int id);
         Task<CommentDto> AddCommentAsync(CommentAddDto commentDto);
-        Task<NoContent> RecommendMovieAsync(RecommendMovieDto recommendMovieDto);
-
+        Task<bool> RecommendMovieAsync(RecommendMovieDto recommendMovieDto);
     }
 }

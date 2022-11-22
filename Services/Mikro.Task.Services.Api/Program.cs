@@ -13,8 +13,31 @@ using MikroTask.Services.Api.Helpers;
 using Mikro.Task.Services.Application.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using Mikro.Task.Services.Application.Models;
+using MassTransit;
+using MikroTask.Services.Application.Consumers;
+using Mikro.Task.Services.Application.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<SendEmailCommandConsumer>();
+    // Default Port : 5672
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQUrl"], "/", host =>
+        {
+            host.Username("guest");
+            host.Password("guest");
+        });
+
+        cfg.ReceiveEndpoint("sendemailqueue", e =>
+        {
+            e.ConfigureConsumer<SendEmailCommandConsumer>(context);
+        });
+    });
+});
+
 
 builder.Services.AddHttpClient();
 
@@ -38,6 +61,7 @@ builder.Services.AddSingleton<IHostedService, TheMovieDbService>();
 
 builder.Services.AddScoped<IMovieService,MovieService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -120,6 +144,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

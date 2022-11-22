@@ -21,4 +21,9 @@
     <ProjectReference Include="..\Mikro.Task.Services.Db\Mikro.Task.Services.Db.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\email-reports\" />
+    <Folder Include="wwwroot\email-errors\" />
+  </ItemGroup>
+
 </Project>

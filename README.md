@@ -23,3 +23,9 @@ REDIS
 Movies ve Movies/{id} bilgilerini tutmak için kullanılmaktadır. Comment eklendiğinde Redis Cache güncellenmektedir.
 
 
+RabbitMq
+
+Email gönderimleri için kuyruk yapısı kullanılmaktadır. Email gönderim isteği sıraya eklenmekte ve daha sonra gönderilmektedir. Mock bir servis oluşturulmuş ve true değerini dönmektedir. Takip edilebilmesi için wwwroot altına emailin gönderim durumu yazılmaktadır.
+
+
+
