@@ -1,6 +1,6 @@
 # TaskMo
 
-Net 6, Sql Server, RabbitMQ, Docker kullanılarak geliştirilmiş bir API projesidir.
+Net 6, Sql Server, RabbitMQ, Redis ve Docker kullanılarak geliştirilmiş bir API projesidir.
 
 ##
 
@@ -14,5 +14,12 @@ Projeyi ayağa kaldırabilmek için Docker dosyaları ayarlanmıştır. Docker k
 
 * rabbitMq için 15672 portundan arayüze erişebiliriz (guest:guest)
   http://localhost:15672
+
+
+##
+
+REDIS
+
+Movies ve Movies/{id} bilgilerini tutmak için kullanılmaktadır. Comment eklendiğinde Redis Cache güncellenmektedir.
 
 

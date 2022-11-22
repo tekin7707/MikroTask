@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mikro.Task.Services.Application.Dtos;
+using Mikro.Task.Services.Application.Services;
 using Mikro.Task.Services.Application.Services.Interfaces;
 
 namespace Mikro.Task.Services.Api.Controllers
@@ -48,12 +49,5 @@ namespace Mikro.Task.Services.Api.Controllers
             return Ok(result);
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("Fail")]
-        public async Task<IActionResult> TestFail()
-        {
-            return Ok("Ok");
-        }
     }
 }

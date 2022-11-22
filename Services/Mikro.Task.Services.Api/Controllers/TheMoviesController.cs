@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Mikro.Task.Services.Application.Dtos;
+using Mikro.Task.Services.Application.Helpers;
 using Mikro.Task.Services.Application.Services.Interfaces;
 using MikroTask.Services.Api.HostedServices;
 using System.Net.Http;
@@ -23,18 +24,18 @@ namespace Mikro.Task.Services.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<string> GetAsync()
+        public async Task<IActionResult> GetAsync()
         {
             var response = await _httpClient.GetAsync(Api_Url);
             if (response.IsSuccessStatusCode)
             {
                 var movieModel = await response.Content.ReadFromJsonAsync<TheMovieModel>();
-                foreach (var movie in movieModel.results)
-                {
-                    var r = await _theMovieService.AddAsync(movie);
-                }
+                await _theMovieService.AddRangeAsync(movieModel.results);
             }
-            return "";
+            else
+                throw new AppException("themoviedb connection error");
+
+            return Ok("Movie list updated manually!");
         }
     }
 }

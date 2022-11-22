@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using MikroTask.Services.Api.Helpers;
 using Mikro.Task.Services.Application.Services.Interfaces;
+using Microsoft.Extensions.Options;
+using Mikro.Task.Services.Application.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -98,6 +100,15 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = false,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
     };
+});
+
+builder.Services.Configure<RedisSettings>(builder.Configuration.GetSection("RedisSettings"));
+builder.Services.AddSingleton<RedisService>(sp =>
+{
+    var redisSettings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
+    var redis = new RedisService(redisSettings.Host, redisSettings.Port);
+    redis.Connect();
+    return redis;
 });
 
 
