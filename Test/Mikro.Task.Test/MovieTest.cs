@@ -16,6 +16,9 @@ namespace MikroTask.Test
 
         public MovieTest()
         {
+            //int port = Convert.ToInt32(_configuration["RedisSettings:Port"]);
+            //string host = _configuration["RedisSettings:Host"];
+
             var mockMapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutoMapperProfile());

@@ -99,7 +99,6 @@ namespace Mikro.Task.Services.Application.Services
             var movie = await GetAsync(recommendMovieDto.MovieId);
 
             var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:sendemailqueue"));
-
             RecommendMovieEmailDto model = new RecommendMovieEmailDto { Email=recommendMovieDto.Email, Movie = movie};
 
             await sendEndpoint.Send<RecommendMovieEmailDto>(model);

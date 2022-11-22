@@ -19,7 +19,7 @@ namespace Mikro.Task.Services.Application.Services
             _movieDbContext = movieDbContext;
         }
 
-        public async Task<bool> AddRangeAsync(List<Result> movies)
+        public async Task<bool> AddRangeAsync(List<TheMovieModel> movies)
         {
             foreach (var movie in movies)
             {
@@ -37,11 +37,21 @@ namespace Mikro.Task.Services.Application.Services
                     title = movie.title,
                     video = movie.video,
                     vote_average = movie.vote_average,
-                    vote_count = movie.vote_count
+                    vote_count = movie.vote_count,
+                    vote_user=0
                 };
                 _movieDbContext.Movies.Add(dbModel);
             }
-            await _movieDbContext.SaveChangesAsync();
+            try
+            {
+                await _movieDbContext.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
 
             return true;
         }

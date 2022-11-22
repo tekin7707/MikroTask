@@ -9,7 +9,7 @@ namespace Mikro.Task.Services.Application.Services.Interfaces
 {
     public interface ITheMovieService
     {
-        Task<bool> AddRangeAsync(List<Result> model);
+        Task<bool> AddRangeAsync(List<TheMovieModel> model);
 
     }
 }

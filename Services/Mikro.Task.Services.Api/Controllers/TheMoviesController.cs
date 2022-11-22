@@ -29,7 +29,7 @@ namespace Mikro.Task.Services.Api.Controllers
             var response = await _httpClient.GetAsync(Api_Url);
             if (response.IsSuccessStatusCode)
             {
-                var movieModel = await response.Content.ReadFromJsonAsync<TheMovieModel>();
+                var movieModel = await response.Content.ReadFromJsonAsync<TheMovieCollection>();
                 await _theMovieService.AddRangeAsync(movieModel.results);
             }
             else

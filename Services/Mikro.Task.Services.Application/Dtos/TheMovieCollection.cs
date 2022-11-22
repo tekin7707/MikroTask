@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mikro.Task.Services.Application.Dtos
 {
-    public class Dates
+    public class TheMovieCollection
     {
-        public string maximum { get; set; }
-        public string minimum { get; set; }
+        public TheMovieDates dates { get; set; }
+        public int page { get; set; }
+        public List<TheMovieModel> results { get; set; }
     }
+
 }

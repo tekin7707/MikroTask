@@ -22,6 +22,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<SendEmailCommandConsumer>();
+    x.AddConsumer<UpdateRedisCommandConsumer>();
     // Default Port : 5672
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -34,6 +35,11 @@ builder.Services.AddMassTransit(x =>
         cfg.ReceiveEndpoint("sendemailqueue", e =>
         {
             e.ConfigureConsumer<SendEmailCommandConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("updateredisqueue", e =>
+        {
+            e.ConfigureConsumer<UpdateRedisCommandConsumer>(context);
         });
     });
 });
@@ -60,6 +66,7 @@ builder.Services.AddDbContext<IdDbContext>(options =>
 builder.Services.AddSingleton<IHostedService, TheMovieDbService>();
 
 builder.Services.AddScoped<IMovieService,MovieService>();
+builder.Services.AddScoped<ITheMovieService,TheMovieService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
