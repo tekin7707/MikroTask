@@ -14,7 +14,7 @@ namespace Mikro.Task.Services.Application.Dtos
         public int MovieId { get; set; }
 
         [Range(0, 10, ErrorMessage = "Score must be in between 1 and 10")]
-        public int Point { get; set; }
+        public int Score { get; set; }
 
         [Column(TypeName = "ntext")]
         [MaxLength]

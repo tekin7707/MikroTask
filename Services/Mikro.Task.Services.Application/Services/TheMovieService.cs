@@ -37,8 +37,7 @@ namespace Mikro.Task.Services.Application.Services
                     title = movie.title,
                     video = movie.video,
                     vote_average = movie.vote_average,
-                    vote_count = movie.vote_count,
-                    vote_user=0
+                    vote_count = movie.vote_count
                 };
                 _movieDbContext.Movies.Add(dbModel);
             }

@@ -35,6 +35,9 @@ namespace Mikro.Task.Services.Db.Migrations
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
@@ -96,9 +99,6 @@ namespace Mikro.Task.Services.Db.Migrations
                     b.Property<int>("vote_count")
                         .HasColumnType("int");
 
-                    b.Property<int>("vote_user")
-                        .HasColumnType("int");
-
                     b.HasKey("id");
 
                     b.ToTable("Movies", "mov");
@@ -107,7 +107,7 @@ namespace Mikro.Task.Services.Db.Migrations
             modelBuilder.Entity("Mikro.Task.Services.Application.Dtos.MovieCommentModel", b =>
                 {
                     b.HasOne("Mikro.Task.Services.Domain.MovieModel", "Movie")
-                        .WithMany("Movie")
+                        .WithMany("Comments")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -117,7 +117,7 @@ namespace Mikro.Task.Services.Db.Migrations
 
             modelBuilder.Entity("Mikro.Task.Services.Domain.MovieModel", b =>
                 {
-                    b.Navigation("Movie");
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

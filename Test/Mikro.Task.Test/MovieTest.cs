@@ -6,6 +6,8 @@ using AutoMapper;
 using Mikro.Task.Services.Application.Helpers;
 using Mikro.Task.Services.Application.Dtos;
 using Mikro.Task.Test.TestDatas;
+using Mikro.Task.Services.Application.Models;
+using MassTransit;
 
 namespace MikroTask.Test
 {
@@ -16,17 +18,18 @@ namespace MikroTask.Test
 
         public MovieTest()
         {
-            //int port = Convert.ToInt32(_configuration["RedisSettings:Port"]);
-            //string host = _configuration["RedisSettings:Host"];
+            var redis = new RedisService("localhost", 6379);
+            redis.Connect();
 
             var mockMapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AutoMapperProfile());
             });
+
             var mapper = mockMapper.CreateMapper();
 
             _contextMock = MockDBContext.Get();
-            _movieService = new MovieService(_contextMock, mapper,null, null);
+            _movieService = new MovieService(_contextMock, mapper, redis, null);
         }
 
         [Fact]
@@ -44,7 +47,7 @@ namespace MikroTask.Test
             try
             {
                 var response = await _movieService.GetAsync(id);
-                Assert.Equal(response.id,id);
+                Assert.Equal(response.id, id);
             }
             catch (AppException ex)
             {
@@ -58,7 +61,7 @@ namespace MikroTask.Test
 
         [Theory]
         [ClassData(typeof(AddCommentTest))]
-        public async Task AddCommentTestAsync(CommentAddDto commentAddDto,string comment)
+        public async Task AddCommentTestAsync(CommentAddDto commentAddDto, string comment)
         {
             try
             {
@@ -73,7 +76,6 @@ namespace MikroTask.Test
             {
                 throw new Xunit.Sdk.XunitException(ex.Message);
             }
-
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Mikro.Task.Services.Application.Services.Interfaces
     public interface IMovieService
     {
         Task<List<MovieListDto>> GetAllAsync();
+        Task<MovieCollection> GetAllWithPageAsync(int count, int page=0);
         Task<MovieDto> GetAsync(int id);
         Task<CommentDto> AddCommentAsync(CommentAddDto commentDto);
         Task<bool> RecommendMovieAsync(RecommendMovieDto recommendMovieDto);

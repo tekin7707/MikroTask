@@ -3,17 +3,9 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Mikro.Task.Services.Application.Dtos;
 using Mikro.Task.Services.Application.Helpers;
-using Mikro.Task.Services.Application.Models;
 using Mikro.Task.Services.Application.Services.Interfaces;
 using Mikro.Task.Services.Db;
-using Mikro.Task.Services.Domain;
-using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Mikro.Task.Services.Application.Services
 {
@@ -23,7 +15,6 @@ namespace Mikro.Task.Services.Application.Services
         private readonly IMapper _mapper;
         private readonly RedisService _redisService;
         private readonly ISendEndpointProvider _sendEndpointProvider;
-
         public MovieService(MovieDbContext movieDbContext, IMapper mapper, RedisService redisService, ISendEndpointProvider sendEndpointProvider)
         {
             _movieDbContext = movieDbContext;
@@ -42,11 +33,11 @@ namespace Mikro.Task.Services.Application.Services
             if (!string.IsNullOrEmpty(redisValue))
                 return JsonSerializer.Deserialize<List<MovieListDto>>(redisValue);
 
-            var movieList = await _movieDbContext.Movies.ToListAsync();
+            var movieList = await _movieDbContext.Movies.OrderBy(x => x.id).ToListAsync();
             if (movieList.Count == 0)
                 throw new AppException("Any movie not found");
 
-            result =_mapper.Map<List<MovieListDto>>(movieList);
+            result = _mapper.Map<List<MovieListDto>>(movieList);
 
             //set to redis
             await _redisService.GetDb().StringSetAsync(redisKey, JsonSerializer.Serialize(result));
@@ -79,14 +70,11 @@ namespace Mikro.Task.Services.Application.Services
             if (movie == null)
                 throw new AppException("Movie not found");
 
-            movie.vote_user = commentDto.Point;
-            _movieDbContext.Movies.Update(movie);
-
             var comment = _mapper.Map<MovieCommentModel>(commentDto);
             await _movieDbContext.Comments.AddAsync(comment);
             await _movieDbContext.SaveChangesAsync();
 
-            var result =_mapper.Map<CommentDto>(comment);
+            var result = _mapper.Map<CommentDto>(comment);
 
             //remove movie from redis
             var status = await _redisService.GetDb().KeyDeleteAsync($"movie{commentDto.MovieId}");
@@ -99,12 +87,24 @@ namespace Mikro.Task.Services.Application.Services
             var movie = await GetAsync(recommendMovieDto.MovieId);
 
             var sendEndpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:sendemailqueue"));
-            RecommendMovieEmailDto model = new RecommendMovieEmailDto { Email=recommendMovieDto.Email, Movie = movie};
+            RecommendMovieEmailDto model = new RecommendMovieEmailDto { Email = recommendMovieDto.Email, Movie = movie };
 
             await sendEndpoint.Send<RecommendMovieEmailDto>(model);
 
             return true;
         }
 
+        public async Task<MovieCollection> GetAllWithPageAsync(int count, int page = 1)
+        {
+            int skip = page > 0 ? (page - 1) * count : 0;
+            var movieList = await GetAllAsync();
+            movieList = movieList.Skip(skip).Take(count).ToList();
+
+            var result = new MovieCollection { items = movieList };
+            if (movieList.Count >= count)
+                result.next = $"http://localhost:5100/movies/{count}/{page + 1}";
+
+            return result;
+        }
     }
 }

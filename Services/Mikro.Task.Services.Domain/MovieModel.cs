@@ -27,7 +27,6 @@ namespace Mikro.Task.Services.Domain
         public bool video { get; set; }
         public double vote_average { get; set; }
         public int vote_count { get; set; }
-        public int? vote_user { get; set; }
         public virtual IEnumerable<MovieCommentModel> Comments { get; set; }
 
 

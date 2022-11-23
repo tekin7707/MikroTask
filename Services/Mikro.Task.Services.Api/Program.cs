@@ -16,6 +16,7 @@ using Mikro.Task.Services.Application.Models;
 using MassTransit;
 using MikroTask.Services.Application.Consumers;
 using Mikro.Task.Services.Application.Helpers;
+using Mikro.Task.Services.Application.Dtos.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,7 +45,6 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-
 builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<MovieDbContext>(options =>
@@ -64,7 +64,7 @@ builder.Services.AddDbContext<IdDbContext>(options =>
 });
 
 builder.Services.AddSingleton<IHostedService, TheMovieDbService>();
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IMovieService,MovieService>();
 builder.Services.AddScoped<ITheMovieService,TheMovieService>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -142,9 +142,18 @@ builder.Services.AddSingleton<RedisService>(sp =>
     return redis;
 });
 
-
-
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var idDbContext = serviceProvider.GetRequiredService<IdDbContext>();
+    idDbContext.Database.Migrate();
+
+    var movieDbContext = serviceProvider.GetRequiredService<MovieDbContext>();
+    movieDbContext.Database.Migrate();
+}
+
 
 if (app.Environment.IsDevelopment())
 {

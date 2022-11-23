@@ -13,6 +13,7 @@ namespace Mikro.Task.Services.Application.Dtos
     {
         public int MovieId { get; set; }
         public string? Comment { get; set; }
+        public int? Score { get; set; }
 
     }
 }

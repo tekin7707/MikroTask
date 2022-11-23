@@ -7,7 +7,7 @@ using Mikro.Task.Services.Application.Services.Interfaces;
 
 namespace Mikro.Task.Services.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
@@ -22,11 +22,19 @@ namespace Mikro.Task.Services.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            var result =  await _movieService.GetAllAsync();
+            var result = await _movieService.GetAllAsync();
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{count}/{page}")]
+        public async Task<IActionResult> GetAllWithPageAsync(int count, int? page = 1)
+        {
+            var result = await _movieService.GetAllWithPageAsync(count, page ?? 1);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("/Movie/{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _movieService.GetAsync(id);
@@ -38,7 +46,7 @@ namespace Mikro.Task.Services.Api.Controllers
         public async Task<IActionResult> RecommendAsync(RecommendMovieDto recommendMovieDto)
         {
             var result = await _movieService.RecommendMovieAsync(recommendMovieDto);
-            return Ok(result ? "The movie recommended.":"Unexpected error");
+            return Ok(result ? "The movie recommended." : "Unexpected error");
         }
 
         [HttpPost]

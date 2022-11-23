@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Mikro.Task.Services.Db;
 using Mikro.Task.Services.Domain;
-using System;
-using System.Collections.Generic;
 
 namespace Mikro.Task.Test.Helpers
 {
@@ -32,7 +30,6 @@ namespace Mikro.Task.Test.Helpers
                     original_language = "en",
                     original_title = $"Movie {i + 1}",
                     the_movie_id = 1001 + i,
-                    vote_user = 4 + (i % 7),
                     release_date = i % 2 == 0 ? "11/21/2022" : "01/01/2019",
                     overview = "overview",
                     backdrop_path = "",

@@ -23,8 +23,6 @@ namespace Mikro.Task.Services.Application.Dtos
         public bool video { get; set; }
         public double vote_average { get; set; }
         public int vote_count { get; set; }
-        public int? vote_user { get; set; }
-
 
     }
 }

@@ -21,6 +21,9 @@ namespace Mikro.Task.Services.Application.Dtos
         [MaxLength]
         public string? Comment { get; set; }
 
+        [Range(0, 10, ErrorMessage = "Score must be in between 1 and 10")]
+        public int Score { get; set; }
+
         public virtual MovieModel Movie { get; set; }   
 
     }

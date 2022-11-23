@@ -30,8 +30,7 @@ namespace Mikro.Task.Services.Db.Migrations
                     title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     video = table.Column<bool>(type: "bit", nullable: false),
                     vote_average = table.Column<double>(type: "float", nullable: false),
-                    vote_count = table.Column<int>(type: "int", nullable: false),
-                    vote_user = table.Column<int>(type: "int", nullable: false)
+                    vote_count = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -46,7 +45,8 @@ namespace Mikro.Task.Services.Db.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MovieId = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "ntext", nullable: true)
+                    Comment = table.Column<string>(type: "ntext", nullable: true),
+                    Score = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

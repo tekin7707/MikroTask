@@ -16,14 +16,14 @@ namespace Mikro.Task.Test.TestDatas
                 new CommentAddDto {
                      Comment = "Test comment. Good.",
                       MovieId = 10, 
-                       Point = 9
+                       Score = 9
                 }, "Test comment. Good."};
 
             yield return new object[] {
                 new CommentAddDto {
                      Comment = "Test comment. Good.",
                       MovieId = 0,
-                       Point = 9
+                       Score = 9
                 }, "Movie not found"};
         }
 
